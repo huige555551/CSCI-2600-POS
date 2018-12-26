@@ -1,0 +1,12 @@
+1.X m(X y, String s) and Y m(Object y, Object s) are function subtype of A.m
+X m(X y, String s) override
+Y m(Object y, Object s) override
+Z m(Y y, String s) override
+
+2.1 The extending class is a true subtype because the functions called in Triangle can be replaced by the function in IsoscelesTriangle
+2.2 The squid is not a true subtype because neckbones() returns 0 not included in Vertebrate's specification. 
+The Human class is a true subtype because it returns 7 neckbones which satisfies Vertebrate's specification.
+2.3 MountainBike is a true subtype. It uses the original data and adds an extra object, without
+modifing anything.
+2.4 ConcurrentAccount is not a true subtype. It adds an exception that Account doesn't have.
+

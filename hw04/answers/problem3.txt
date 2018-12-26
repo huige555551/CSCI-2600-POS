@@ -1,0 +1,5 @@
+I choose adjacency list, where each node is associated with a list of its children and the label of the edge.
+I utilize hashmap to implement this. The advantage of this structure is that it takes short time to access the children and edges of a parent node. 
+Also it only stores existing edges and nodes, so it is flexible and it saves memory.
+For adjacency matrix, it is very quick to find out the edge that connect two given nodes.
+For a collection of edges, it saves much more memory compared to adjacency matrix.

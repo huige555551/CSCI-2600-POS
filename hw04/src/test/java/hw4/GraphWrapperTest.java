@@ -1,0 +1,231 @@
+package hw4;
+
+import static org.junit.Assert.*;
+import java.util.Iterator;
+import org.junit.Test;
+public final class GraphWrapperTest {
+	private final double JUNIT_DOUBLE_DELTA = 0.00001;
+	
+	@Test
+	public void Creation() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+	}
+	@Test
+	public void Add_Null_Node() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		try 
+		{
+			gr.addNode(null);
+		}
+		catch (RuntimeException A)
+		{
+		}	
+	}
+	@Test
+	public void Add_Same_Node() {
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("A");
+		Iterator<String> i = gr.listNodes();
+		assertEquals(i.next(),"A");
+		assertEquals(i.hasNext(),false);
+	}
+	@Test
+	public void Add_Null_edgeLabel() 
+	{
+		int x = 0;
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		try
+		{
+			gr.addEdge("A", "B", null);
+		}
+		catch (RuntimeException A)
+		{
+			x += 1;
+		}
+		assertEquals(x,1); 
+	}
+	@Test
+	public void list_One_Node() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		Iterator<String> i = gr.listNodes();
+		assertEquals(i.next(), "A");
+		assertEquals(i.hasNext(),false);
+	}
+	@Test
+	public void list_Two_Node() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		Iterator<String> i = gr.listNodes();
+		assertEquals(i.next(), "A");
+		assertEquals(i.next(), "B");
+		assertEquals(i.hasNext(),false);
+	}
+	@Test
+	public void list_EmptyString_Node() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("");
+		Iterator<String> i = gr.listNodes();
+		assertEquals(i.next(), "");
+		assertEquals(i.hasNext(), false);
+	}
+	@Test
+	public void list_No_Nodes() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		Iterator<String> i = gr.listNodes();
+		assertEquals(i.hasNext(), false);
+
+	}
+	
+	@Test
+	public void list_One_Children()  
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		gr.addEdge("A", "B", "AB");
+		Iterator<String> i = gr.listChildren("A");
+		assertEquals(i.next(), "B(AB)");
+	}
+	@Test
+	public void list_No_Child() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addEdge("A", "B", "one");
+		Iterator<String> i = gr.listChildren("A");
+		assertEquals(i.hasNext(), false);
+	}
+	@Test
+	public void list_NO_Child_return()  
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("B");
+		assertEquals(gr.listChildren("A"), null);
+
+	}
+	@Test
+	public void Empty_Graph_Child_return()  
+	{
+		GraphWrapper gr = new GraphWrapper();
+		assertEquals(gr.listChildren("A"), null);
+	}
+	@Test
+	public void list_Empty_Child_return() 
+	{ 
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("B");
+		Iterator<String> i = gr.listChildren("B");
+		assertEquals(i.hasNext(), false);
+
+	}
+	@Test
+	public void list_NoNode() 
+	{ 
+		GraphWrapper gr = new GraphWrapper();
+		assertEquals(gr.listChildren("A"), null);
+
+	}
+	
+	@Test
+	public void add_Null_Edge() 
+	{ 
+		int x = 0;
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		try 
+		{
+			gr.addEdge("A", null, "Imp");
+		}
+		catch (NullPointerException A)
+		{
+			x += 1;
+		}
+		assertEquals(x, 1);
+		// Does not work if checkReps are commented out, which they are for marvel, so changed to 1 temp.
+	}
+	@Test
+	public void list_Two_Children() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		gr.addNode("C");
+		gr.addEdge("A", "B", "two");
+		gr.addEdge("A", "C", "one");
+
+		Iterator<String> i = gr.listChildren("A");
+		assertEquals(i.next(), "B(two)");
+		assertEquals(i.next(), "C(one)");
+		assertEquals(i.hasNext(),false);
+	}
+	@Test
+	public void list_Two_Children_Edge_Alphabetical() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		gr.addEdge("A", "B", "ABC");
+		gr.addEdge("A", "B", "ACB");
+
+		Iterator<String> i = gr.listChildren("A");
+		assertEquals(i.next(), "B(ABC)");
+		assertEquals(i.next(), "B(ACB)");
+		assertEquals(i.hasNext(),false);
+	}
+	@Test
+	public void list_Dup_Children() 
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		gr.addNode("C");
+		gr.addEdge("A", "B", "one");
+		gr.addEdge("A", "B", "one");
+
+		Iterator<String> i = gr.listChildren("A");
+		assertEquals(i.next(), "B(one)");
+		assertEquals(i.next(), "B(one)");
+		assertEquals(i.hasNext(), false);
+	}
+	
+	
+	@Test
+	public void Empty_Edges()
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		gr.addEdge("A", "B", "");
+		Iterator<String> i = gr.listChildren("A");
+		assertEquals(i.next(), "B()");
+		assertEquals(i.hasNext(),false);
+	}
+
+	@Test
+	public void Multiple_Reflexive()
+	{
+		GraphWrapper gr = new GraphWrapper();
+		gr.addNode("A");
+		gr.addNode("B");
+		gr.addNode("C");
+		gr.addEdge("A", "A", "label1");
+		gr.addEdge("A", "A", "label3");
+		gr.addEdge("A", "A", "label2");
+		Iterator<String> i = gr.listChildren("A");
+		assertEquals(i.hasNext(),true);
+	}
+
+	
+}

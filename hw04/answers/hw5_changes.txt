@@ -1,0 +1,3 @@
+I modifies the datastructure from a 2D map to Hashmap<String char,List<edge>> in order to save memory.
+To compromise the changes in the data structure, i modified every functions.
+I also modifies the addEdge function to forbid reflexive edge.
