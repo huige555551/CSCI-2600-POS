@@ -1,0 +1,73 @@
+Problem 1
+	1.{x>2&& x is prime}
+	2.{1≤x≤3}
+	3.{x>0 && y>0}
+	4.{abs(result*result-x)≤0.000001}
+	5.{x is an object of type C}
+
+Problem 2
+	1.When x=-2, y=-4, so it is invalid. Change the postcondition to {y ≤ -4}.
+	2.invalid. The result is x=y=7. Change the postcondition to {x=7 && y=7}.
+	3.valid
+	4.{E} code {D}
+	5.valid
+
+Problem 3
+	1.
+	{y=10}
+	{z=14}
+	{y=0}
+	
+	2.
+	{|x| > 11}
+	{x=k^2 && k > 11}
+	{x=k^2+1 && k>11}
+	
+	3.
+	{z=4x^2+4x+1 && x>0}
+	{w=1}
+	
+	4.
+	{x=27}
+	{y=42}
+	{z>69}
+	
+Problem 4
+	1.
+	{x>0}
+	{y>0}
+	
+	2.
+	{y=a||x=b}
+	{y=a||t=b}
+	{x=a||t=b}
+	
+	3.
+	{w>0||s<2}
+	{t<4||w>0}
+	{t<4||r>4}
+	
+	4.
+	{-3≤x≤6}
+	{-9≤z+x≤9}
+	
+Problem 5
+	{x<-1||x>0}
+	{x>0}
+	{z>0}
+	{x<-1}
+	{z<0}
+	
+Problem 6
+	1.
+	{z<0}
+	{w>0}
+	the precondition is too strong 
+	sufficient
+	
+	2.
+	{y>-1}
+	{x<y}
+	{x≠y}
+	{x<y}
+	sufficient 
