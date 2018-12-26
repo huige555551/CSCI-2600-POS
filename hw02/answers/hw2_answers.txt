@@ -1,0 +1,78 @@
+Problem1:
+	LI :total = a[0] + ... +a[i-1] && L = [a[j] :: forall j :: 0 <= j < i -> a[j] > a[0] + ... a[j-1]]
+	Proof by Induction:
+	Base case:
+	Before the entering the loop, L=[],i=0, total =0
+	Therefore it satisfy the loop invariant
+	Induction step:
+	Assume LI is true for step k, proof that it is true for step k+1
+	total = a[0] + ... a[k-1]
+	L = [a[j] :: forall j :: 0 <= j < k -> a[j] > a[0] + ... a[j-1]]
+	When entering the loop, there are two conditions:
+		If a[k]> total, a[k] will be added to L
+		Therefore a[k] > a[0] + ... a[k-1]
+		So L = [a[j] :: forall j :: 0 <= j < k+1 -> a[j] > a[0] + ... a[j-1]] is true
+		if a[k]<= total, a[k] will not be added to L
+		Therefore L = [a[j] :: forall j :: 0 <= j < k+1 -> a[j] > a[0] + ... a[j-1]] still holds
+	Then total = total + a[i] assure that for k+1 step, total = a[0]+...+a[k]
+	In Both cases, LI is true for step k+1
+	By induction, LI holds for each iteration
+	
+	Decrementing function:
+	D(k) = a.length- i(k)
+	D(k+1) = a.length - i(k+1) 
+	= a.length - (i(k)+1)
+	= a.length - i(k) - 1 
+	= D(k) - 1
+	So D(k+1) <D(k), the function is decreasing
+	When D = 0, a.length = i, it does not satisfy the loop condition
+	So the loop will exit
+
+Problem2:
+	Pseudo Code:
+	Arrange(input arr):
+		i=0
+		j=arr.length-1
+		While(i<j){
+			if arr[i] is blue && arr[j] is red:
+				swap(arr,i,j)
+			if arr[i] is red:
+				i++
+			if arr[j] is blue:
+				j--
+		}
+	Postcondition:
+	There exist k so that forall i:: 0<=i<k -> arr[i] is red && forall i ::k<=i< arr.length-1 -> arr[i] is blue.
+	LI:
+	forall m::0<=m<i ->arr[m] is red && forall n::j<n<arr.length ->arr[n] is blue
+	
+Problem3:
+	1.u = Factorial(r) && 0 <= r <= n
+	2.u = v * s && 1 <= s<= r + 1
+	3. u == v*r
+	
+	Inner LI proof:
+	Base case: r =0, s=1, u=1, v=u
+	Therefore LI is true for base case
+	Assume it is true for step k, proof that it is true for step k+1:
+	u(k)=v* s(k)&& 1<= s<= r+1
+	u(k+1) = u(k)+v
+	s(k+1) = s(k) +1
+	Therefore 1<= s(k+1) <=r+1
+	u(k+1) = v*s(k) +v = v*(s(k)+1) = v*(s(k+1))
+	So LI is true for step k+1
+	By Induction, LI holds for each iteration
+	
+	Outer LI proof:
+	Base case:
+	u = 1 = Factorial(0)&& r =0, so LI is true for base case.
+	Assume LI is true for step k, proof that it is true for step k+1
+	u(k) = Factorial(r(k))
+	The result of the inner loop is u = v*(r+1)
+	Therefore u(k+1) = u(k)*(r(k)+1) = Factorial(r(k))*r(k+1)
+	r(k+1) = r(k) + 1
+	Factorial(k+1) = Factorial(k)*(k+1)
+	Therefore u(k+1) = Factorial(r(k)+1) = Factorial(r(k+1))
+	Therefore LI holds for step k+1
+	By Induction, LI holds for each iteration
+	
