@@ -1,0 +1,14 @@
+4.1
+The constructor and two member functions are set up incorrectly.
+I add"this." in front of the private variables to distinguish it.
+Get volume function should return volume.
+Get color function should return color.
+
+4.2
+The first solution requires O(n) operation every time the getVolume() is called, and the second solution requires add/remove balls' volume
+every time content changes. The second solution is better when the getVolume is called frequently.
+
+4.3
+First Way: Generate a sorted set when getBallsFromSmallest is called.
+Second Way: Maintain a sorted set as private variable. The add and remove function would add/remove ball to\from the set each time when it is called.
+The performance depends on the frequency of calling getBallsFromSmallest. If the function is called frequently compared to the add and remove function, then maintain a set would be better. 
