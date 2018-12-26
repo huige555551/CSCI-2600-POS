@@ -1,0 +1,10 @@
+1. b
+
+2. c
+
+3. b
+
+4. b
+
+5.
+ c when precondition is violated, the result is undefined, the specification does not say. Give 1 pt for d 

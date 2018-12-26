@@ -1,0 +1,139 @@
+Problem 1. (5 points, 1 point each)
+1.	{ x is prime }
+2.	{ 1 <= x <= 3 }
+3.	neither
+4.	abs(result*result - x) <= 0.000001
+5.	{ x is an C object } this assumes C is a true subtype of B and B is a true subtype of A.
+
+Problem 2. (10 points, 2 points each)
+1.	invalid; y <= -4, y < -2 or equivalent; x < -2
+2.	invalid; rearrange t=x;x=y;y=t; or postcondition {x=7 && y=7}
+3.	valid
+4.	{E} code {B} not valid; possible values E: x >= 0, C: x > 0,    B: x > 1, D: x > -1, code x++
+ 	{E} code {D} valid  (one point each, no need to give modified pre or postconditions)
+5. 	valid
+
+Problem 3: (12 points, 3 points each) 
+
+1.
+	{ x > 0 }
+x = 10;
+	{ x = 10 }
+y = 20 - x;
+	{ x = 10 && y = 10 }
+z = y + 4;
+	{ x = 10 && y = 10 && z = 14}
+y = 0;
+	{x = 10 && y = 0 && z = 14} 
+
+2.
+	{ |x| > 11 }	
+x = -x
+	{ x > 11 || x < -11 }
+x = x * x;   
+ 	{ x >= 144 }  // accept x > 121
+x = x + 1;
+	{ x > 145 }   // accept x > 122 
+
+
+3.
+	{ y = 2*x + 1 && x > 0}
+z = y * y;
+	{ y = 2*x + 1 && z = y*y } => 
+		{ y = 2*x + 1 && z = 4*x*x + 4*x + 1 } 
+w = z % 4;
+	{ w = 1 && y = 2*x + 1 && z = y*y } 
+
+4.
+	{ w > 0 }
+x = 27
+	{ w > 0 && x = 27}
+y = 42;
+	{ w > 0 && x = 27 && y = 42}
+z = w + x + y
+	{ w > 0 && x = 27 && y = 42 && z > 69}
+
+
+Problem 4 (12 points, 3 points each)
+
+1.
+	wp(y = x * 2, y >= 2) => { x >= 1 }
+y = x * 2
+	wp(z = y/2, z > 0) => { y >= 2 } // int division
+z = y / 2
+{ z > 0 }
+
+2.
+	wp(t=x, y=a || t=b) = (y=a || x=b)
+t = x
+	wp(x=y, x=a || t=b) = (y=a || t=b)
+x = y
+	wp(y=t, x=a || y=b) = (x=a || t=b)
+y = t
+{x = a || y = b}
+
+3.
+wp(t=2*s, 2 > s || 2*s+w > t) 
+ 	=> { s < 2 || 2*s+w > 2*s }
+   	=> { s < 2 || w > 0 }
+t = 2*s;
+	wp(r=w+4, r > 2*s + w || 2*s + w > t) 
+   		=> { w+4 > 2*s+w || 2*s+w > t }
+   		=> { 2 > s || 2*s + w > t }
+r = w + 4;
+	wp(s = 2*s + w, r > s || s > t) 
+   		=> { r > 2*s + w || 2*s + w > t }
+s = 2*s + w;
+{ r > s || s > t }
+
+4. 
+wp(z=x-3, z + x >= -9 && z + x <= 9) 
+	= (x - 3 + x >= -9 && x - 3 + x <= 9)
+	= (2x >= -6 && 2x <= 12)
+	= (x >= -3 && x <= 6
+z = x - 3
+	wp(y=z+x, y >= -9 && y <= 9} = (z+x >= -9 && z+x <= 9) 
+y = z + x
+{ |y| <= 9 } = {y >= -9 && y <= 9}
+
+Problem 5 (2 points) 
+	wp( (x >= 0 && x != 0) || (x < 0 && x != -1)) 
+		= (x > 0) || (x < -1) 
+if (x >= 0)
+		wp(z = x, z != 0) => { x ! = 0 }
+	z = x;
+		{ z != 0 }
+else
+		wp(z = x + 1, z != 0) = { x + 1 != 0 } = {x != -1}
+    z = x + 1;
+		{z != 0}
+{ z != 0 }
+
+
+Problem 6 (8 points, 4 points each)
+1.
+Sufficient, backward reasoning from the postcondition yields {x < 1}
+Values less than 0 will allow the post condition to be true                               
+
+	wp(z = x - 1, z < 0) = { x < 1 }  
+z = x - 1;
+	wp( w = -z, w > 0) = { -z > 0 } = { z < 0 }
+w = -z;
+	wp(w = w+1, w > 1) = { w > 0 }
+w = w + 1;
+{ w > 1 }
+
+2. 
+Sufficient. Values y > 0 allow post condition to hold.
+
+((x==y && y > -1)) || (x != y) && true) = 
+	((x==y && y > -1) || (x != y))
+if(x == y) 
+		wp(x = -1, x < y) = (-1 < y)  
+	x = -1;
+else
+		wp(x = y-1, x < y) = (y-1 < y) = (-1 < 0) = true
+	x = y - 1
+{x < y}
+
+Collaboration and Reflection (0.5 points each)

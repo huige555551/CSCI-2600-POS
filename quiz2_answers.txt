@@ -1,0 +1,23 @@
+Question 1. (2 points)
+false
+
+Question 2. (8 points)
+a) When D = 0, p == b. We could rewrite the loop as 
+   while(b - p > 0) or while(D > 0) so when D == 0, the loop exits.
+
+b) LI: x = p*a && p <= b.
+   Initially p = 0, so 0 * a = 0 = x.
+   p = 0 and by precondition b > 0, so p <= b
+   
+
+c) iteration k:
+(k) is x at end of iteration k
+   assume: x(k) = p(k) * a && p(k) <= b is true
+
+   iteration k + 1:
+   x(k+1) = x(k) + a
+   p(k+1) = p(k) + 1
+
+   p(k+1) * a = (p(k) + 1) * a = (p(k) * a) + a = x(k) + a = x(k+1)
+
+   p(k+1) <= b, at iteration k, p(k) < b or we would have exited the loop, so p(k+1) <= b 
